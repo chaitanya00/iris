@@ -1,0 +1,20 @@
+from sklearn import datasets
+iris=datasets.load_iris()
+x=iris.data[:,:4]
+y=iris.target
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=.2)
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+scaler.fit(x_train)
+x_train=scaler.transform(x_train)
+x_test=scaler.transform(x_test)
+from sklearn.neighbors import KNeighborsClassifier
+knn=KNeighborsClassifier(n_neighbors=5)
+knn.fit(x_train,y_train)
+pred=knn.predict(x_test)
+correct=0
+for i in range(0,len(y_test)):
+    if pred[i]==y_test[i]:
+        correct+=1
+print(correct)  
